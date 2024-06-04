@@ -92,8 +92,25 @@ install_oh_my_zsh_plugins() {
 
 install_powerlevel10k() {
     echo "Installing Powerlevel10k..."
-    git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/powerlevel10k
-    echo 'source ~/powerlevel10k/powerlevel10k.zsh-theme' >>~/.zshrc
+    # Copy local.cache file to home cache
+    cp -R "${SCRIPT_DIR}/.cache/*" "$HOME/.cache"
+
+    # Add Powerlevel10k configuration to .zshrc
+    cat <<EOF >> "$HOME/.zshrc"
+# To customize Powerlevel10k, edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+EOF
+    # Copy the .p10k.zsh file from the repository
+    cp "${SCRIPT_DIR}/.p10k.zsh" "$HOME/.p10k.zsh"
+    # Add Powerlevel10k instant prompt at the top of .zshrc
+    cat <<'EOF' | cat - "$HOME/.zshrc" > temp && mv temp "$HOME/.zshrc"
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+EOF
 }
 
 install_lazyvim() {
