@@ -1,6 +1,6 @@
 #!/usr/bin/zsh
 
-set -e
+#set -e
 
 # Define variables
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
@@ -13,7 +13,7 @@ OH_MY_ZSH_REPO="https://github.com/ohmyzsh/ohmyzsh.git"
 OH_MY_ZSH_CUSTOM="$HOME/.oh-my-zsh/custom"
 ZSH_AUTOSUGGESTIONS_REPO="https://github.com/zsh-users/zsh-autosuggestions.git"
 ZSH_SYNTAX_HIGHLIGHTING_REPO="https://github.com/zsh-users/zsh-syntax-highlighting.git"
-BAT_REPO="https://github.com/sharkdp/bat/releases/latest/download/bat_0.18.3_amd64.deb"
+BAT_REPO="https://github.com/sharkdp/bat/releases/latest/download/bat_0.24.0_amd64.deb"
 
 install_dependencies() {
     echo "Installing dependencies..."
