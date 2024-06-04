@@ -20,8 +20,7 @@ install_dependencies() {
         make \
         libevent-dev \
         ncurses-dev \
-        git \
-        neovim
+        git
 }
 
 install_tmux() {
