@@ -11,6 +11,9 @@ POWERLEVEL10K_REPO="https://github.com/romkatv/powerlevel10k.git"
 LAZYVIM_REPO="https://github.com/LazyVim/starter"
 OH_MY_ZSH_REPO="https://github.com/ohmyzsh/ohmyzsh.git"
 OH_MY_ZSH_CUSTOM="$HOME/.oh-my-zsh/custom"
+ZSH_AUTOSUGGESTIONS_REPO="https://github.com/zsh-users/zsh-autosuggestions.git"
+ZSH_SYNTAX_HIGHLIGHTING_REPO="https://github.com/zsh-users/zsh-syntax-highlighting.git"
+BAT_REPO="https://github.com/sharkdp/bat/releases/latest/download/bat_0.18.3_amd64.deb"
 
 install_dependencies() {
     echo "Installing dependencies..."
@@ -40,9 +43,19 @@ install_tmux() {
     rm -rf tmux-${TMUX_VERSION} tmux.tar.gz
 }
 
+install_bat() {
+    echo "Installing bat..."
+    wget -O bat.deb "${BAT_REPO}"
+    sudo dpkg -i bat.deb
+    rm bat.deb
+}
+
+
 install_oh_my_zsh() {
     echo "Installing Oh My Zsh..."
+    export KEEP_ZSHRC="yes"
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+    unset KEEP_ZSHRC
     #sed -i 's|ZSH_THEME=".*"|ZSH_THEME="powerlevel10k/powerlevel10k"|' "$HOME/.zshrc"
 }
 
@@ -75,8 +88,13 @@ setup_config() {
     echo "Setting up configuration directory..."
     mkdir -p "${SCRIPT_DIR}"
 
+    # Remove old conf if exists
+    rm ~/.tmux.conf
+
+    cp "${SCRIPT_DIR}/.tmux.conf" "$HOME/.tmux.conf"
+
     # Symlink configuration files
-    ln -sf "${SCRIPT_DIR}/.tmux.conf" "$HOME/.tmux.conf"
+    #ln -sf "${SCRIPT_DIR}/.tmux.conf" "$HOME/.tmux.conf"
 
     # Source all .zsh files in the repository
     cat <<EOF >> "$HOME/.zshrc"
@@ -91,6 +109,7 @@ EOF
 main() {
     install_dependencies
     install_tmux
+    install_bat
     install_oh_my_zsh
     install_oh_my_zsh_plugins
     setup_config
