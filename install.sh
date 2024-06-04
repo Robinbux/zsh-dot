@@ -17,7 +17,7 @@ TPM_REPO="https://github.com/tmux-plugins/tpm"
 
 # Set with cargo packages
 CARGO_PACKAGES=(
-    "exa"
+    "eza"
     "bat"
 )
 
@@ -70,10 +70,15 @@ install_tpm() {
 
 install_oh_my_zsh() {
     echo "Installing Oh My Zsh..."
-    export KEEP_ZSHRC="yes"
+    # Backup existing .zshrc
+    [ -f "$HOME/.zshrc" ] && cp "$HOME/.zshrc" "$HOME/.zshrc.bak"
+    # Install Oh My Zsh
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-    unset KEEP_ZSHRC
-    #sed -i 's|ZSH_THEME=".*"|ZSH_THEME="powerlevel10k/powerlevel10k"|' "$HOME/.zshrc"
+    # Restore previous .zshrc and reapply necessary changes
+    if [ -f "$HOME/.zshrc.bak" ]; then
+        tail -n +2 "$HOME/.zshrc" >> "$HOME/.zshrc.bak"
+        mv "$HOME/.zshrc.bak" "$HOME/.zshrc"
+    fi
 }
 
 install_oh_my_zsh_plugins() {
@@ -93,7 +98,16 @@ install_powerlevel10k() {
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 EOF
     # Copy the .p10k.zsh file from the repository
-    cp "${CONFIG_DIR}/.p10k.zsh" "$HOME/.p10k.zsh"
+    cp "${SCRIPT_DIR}/.p10k.zsh" "$HOME/.p10k.zsh"
+    # Add Powerlevel10k instant prompt at the top of .zshrc
+    cat <<'EOF' | cat - "$HOME/.zshrc" > temp && mv temp "$HOME/.zshrc"
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+EOF
 }
 
 install_lazyvim() {
