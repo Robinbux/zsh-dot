@@ -13,7 +13,13 @@ OH_MY_ZSH_REPO="https://github.com/ohmyzsh/ohmyzsh.git"
 OH_MY_ZSH_CUSTOM="$HOME/.oh-my-zsh/custom"
 ZSH_AUTOSUGGESTIONS_REPO="https://github.com/zsh-users/zsh-autosuggestions.git"
 ZSH_SYNTAX_HIGHLIGHTING_REPO="https://github.com/zsh-users/zsh-syntax-highlighting.git"
-BAT_REPO="https://github.com/sharkdp/bat/releases/latest/download/bat_0.24.0_amd64.deb"
+TPM_REPO="https://github.com/tmux-plugins/tpm"
+
+# Set with cargo packages
+CARGO_PACKAGES=(
+    "exa"
+    "bat"
+)
 
 install_dependencies() {
     echo "Installing dependencies..."
@@ -31,6 +37,20 @@ install_dependencies() {
         fd-find
 }
 
+install_rust() {
+    echo "Installing Rust..."
+    curl https://sh.rustup.rs -sSf | sh -s -- -y
+    source "$HOME/.cargo/env"
+}
+
+install_cargo_packages() {
+    echo "Installing Cargo packages..."
+    for package in "${CARGO_PACKAGES[@]}"; do
+        cargo install "$package"
+    done
+
+}
+
 install_tmux() {
     echo "Installing tmux from source..."
     wget -O tmux.tar.gz "${TMUX_SOURCE_URL}"
@@ -43,13 +63,10 @@ install_tmux() {
     rm -rf tmux-${TMUX_VERSION} tmux.tar.gz
 }
 
-install_bat() {
-    echo "Installing bat..."
-    wget -O bat.deb "${BAT_REPO}"
-    sudo dpkg -i bat.deb
-    rm bat.deb
+install_tpm() {
+    echo "Installing TPM (Tmux Plugin Manager)..."
+    git clone "${TPM_REPO}" ~/.tmux/plugins/tpm
 }
-
 
 install_oh_my_zsh() {
     echo "Installing Oh My Zsh..."
@@ -105,16 +122,24 @@ done
 EOF
 }
 
+install_tmux_plugins() {
+    echo "Installing tmux plugins..."
+    ~/.tmux/plugins/tpm/bin/install_plugins
+}
+
 # Main function
 main() {
     install_dependencies
     install_tmux
-    install_bat
+    install_tpm
+    install_rust
+    install_cargo_packages
     install_oh_my_zsh
     install_oh_my_zsh_plugins
     setup_config
     install_powerlevel10k
     install_lazyvim
+    install_tmux_plugins
     echo "Setup completed successfully."
 }
 
