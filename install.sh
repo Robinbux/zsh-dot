@@ -22,7 +22,10 @@ install_dependencies() {
         make \
         libevent-dev \
         ncurses-dev \
-        git
+        git \
+        fzf \
+        ripgrep \
+        fd-find
 }
 
 install_tmux() {
@@ -41,6 +44,14 @@ install_oh_my_zsh() {
     echo "Installing Oh My Zsh..."
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
     #sed -i 's|ZSH_THEME=".*"|ZSH_THEME="powerlevel10k/powerlevel10k"|' "$HOME/.zshrc"
+}
+
+install_oh_my_zsh_plugins() {
+    echo "Installing Oh My Zsh plugins..."
+    git clone --depth=1 "${ZSH_AUTOSUGGESTIONS_REPO}" "${OH_MY_ZSH_CUSTOM}/plugins/zsh-autosuggestions"
+    git clone --depth=1 "${ZSH_SYNTAX_HIGHLIGHTING_REPO}" "${OH_MY_ZSH_CUSTOM}/plugins/zsh-syntax-highlighting"
+    # Enable the plugins in .zshrc
+    sed -i 's/plugins=(git)/plugins=(git zsh-autosuggestions zsh-syntax-highlighting)/' "$HOME/.zshrc"
 }
 
 install_powerlevel10k() {
@@ -70,7 +81,7 @@ setup_config() {
     # Source all .zsh files in the repository
     cat <<EOF >> "$HOME/.zshrc"
 # Source custom Zsh configurations
-for file in ${SCRIPT_DIR}/.zsh/*.zsh; do
+for file in ${SCRIPT_DIR}/*.zsh; do
     source \$file
 done
 EOF
@@ -81,6 +92,7 @@ main() {
     install_dependencies
     install_tmux
     install_oh_my_zsh
+    install_oh_my_zsh_plugins
     setup_config
     install_powerlevel10k
     install_lazyvim
