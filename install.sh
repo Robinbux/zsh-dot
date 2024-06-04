@@ -19,6 +19,7 @@ TPM_REPO="https://github.com/tmux-plugins/tpm"
 CARGO_PACKAGES=(
     "eza"
     "bat"
+    "fnm"
 )
 
 install_dependencies() {
