@@ -93,7 +93,7 @@ install_oh_my_zsh_plugins() {
 install_powerlevel10k() {
     echo "Installing Powerlevel10k..."
     # Copy local.cache file to home cache
-    cp -R "${SCRIPT_DIR}/.cache/*" "$HOME/.cache"
+    cp -R ${SCRIPT_DIR}/.cache/* $HOME/.cache
 
     # Add Powerlevel10k configuration to .zshrc
     cat <<EOF >> "$HOME/.zshrc"
