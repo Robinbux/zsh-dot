@@ -15,11 +15,11 @@ ZSH_AUTOSUGGESTIONS_REPO="https://github.com/zsh-users/zsh-autosuggestions.git"
 ZSH_SYNTAX_HIGHLIGHTING_REPO="https://github.com/zsh-users/zsh-syntax-highlighting.git"
 TPM_REPO="https://github.com/tmux-plugins/tpm"
 
-# Set with cargo packages
 CARGO_PACKAGES=(
     "eza"
     "bat"
     "fnm"
+    "atuin"
 )
 
 install_dependencies() {
@@ -36,6 +36,11 @@ install_dependencies() {
         fzf \
         ripgrep \
         fd-find
+}
+
+install_homebrew() {
+    echo "Installing Homebrew..."
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 }
 
 install_rust() {
@@ -150,6 +155,7 @@ install_tmux_plugins() {
 # Main function
 main() {
     install_dependencies
+    install_homebrew
     install_tmux
     install_tpm
     install_rust
