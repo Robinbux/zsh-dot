@@ -28,10 +28,29 @@ check_tmux_installed() {
     fi
 }
 
+install_kubectl() {
+    curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+    chmod +x kubectl
+    mv kubectl ~/bin
+}
+
+check_kubectl_installed() {
+    if [ -f "$HOME/bin/kubectl" ]; then
+        echo "kubectl is already installed in ~/bin."
+        return 0
+    else
+        echo "kubectl is not installed in ~/bin."
+        return 1
+    fi
+}
+
 main() {
     if ! check_tmux_installed; then
         install_tmux
-        install_tmux_plugins\
+        install_tmux_plugins
+    fi
+    if ! check_kubectl_installed; then
+        install_kubectl
     fi
 }
 
