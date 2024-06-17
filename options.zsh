@@ -75,4 +75,7 @@ EOF
 command -v zoxide &>/dev/null && eval "$(zoxide init zsh)"
 
 # Set editor default keymap to emacs (`-e`) or vi (`-v`)
-bindkey -v
+bindkey -e
+
+# Atuin
+eval "$(atuin init zsh --disable-up-arrow)"
