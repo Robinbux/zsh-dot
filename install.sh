@@ -36,10 +36,10 @@ install_dependencies() {
         fd-find
 }
 
-install_homebrew() {
-    echo "Installing Homebrew..."
-    yes '' | /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-}
+# install_homebrew() {
+#     echo "Installing Homebrew..."
+#     yes '' | /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+# }
 
 install_rust() {
     echo "Installing Rust..."
