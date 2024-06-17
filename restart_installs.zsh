@@ -36,10 +36,8 @@ install_kubectl() {
 
 check_kubectl_installed() {
     if [ -f "$HOME/bin/kubectl" ]; then
-        echo "kubectl is already installed in ~/bin."
         return 0
     else
-        echo "kubectl is not installed in ~/bin."
         return 1
     fi
 }
