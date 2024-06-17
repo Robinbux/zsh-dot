@@ -20,9 +20,19 @@ install_tmux_plugins() {
     ~/.tmux/plugins/tpm/bin/install_plugins
 }
 
+check_tmux_installed() {
+    if command -v tmux >/dev/null 2>&1; then
+        return 0
+    else
+        return 1
+    fi
+}
+
 main() {
-    install_tmux
-    install_tmux_plugins
+    if ! check_tmux_installed; then
+        install_tmux
+        install_tmux_plugins\
+    fi
 }
 
 main
