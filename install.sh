@@ -113,6 +113,7 @@ main() {
     install_cargo_packages
     install_oh_my_zsh
     install_oh_my_zsh_plugins
+    install_oh_my_posh
     setup_config
     install_lazyvim
     install_tmux_plugins
