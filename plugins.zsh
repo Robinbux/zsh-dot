@@ -43,6 +43,3 @@ zinit light junegunn/fzf-bin
 # BAT
 zinit ice wait lucid from"gh-r" as"program" mv"*/bat -> bat" atload"export BAT_THEME='Nord'"
 zinit light sharkdp/bat
-
-# Atuin
-zinit load atuinsh/atuin
