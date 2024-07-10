@@ -3,13 +3,10 @@ zmodload zsh/zle
 zmodload zsh/zpty
 zmodload zsh/complist
 
-autoload _vi_search_fix
 autoload -Uz colors
 autoload -U compinit
 colors
 
-zle -N _vi_search_fix
-zle -N _sudo_command_line
 
 # Completion
 # disable sort when completing `git checkout`
@@ -35,7 +32,7 @@ ZSH_HIGHLIGHT_MAXLENGTH=512
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=$color8,bold"
 
 while read -r opt
-do 
+do
   setopt $opt
 done <<-EOF
 AUTOCD
@@ -63,7 +60,7 @@ HIST_REDUCE_BLANKS
 EOF
 
 while read -r opt
-do 
+do
   unsetopt $opt
 done <<-EOF
 FLOWCONTROL

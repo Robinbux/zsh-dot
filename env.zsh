@@ -54,4 +54,3 @@ export FZF_DEFAULT_OPTS="
   --layout=reverse
   --border horizontal
   --height 80"
-
