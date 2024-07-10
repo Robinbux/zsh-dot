@@ -29,7 +29,9 @@ check_tmux_installed() {
 }
 
 install_kubectl() {
-    mkdir -p $HOME/bin
+    if [ ! -d "$HOME/bin" ]; then
+        mkdir -p "$HOME/bin"
+    fi
     curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
     chmod +x kubectl
     mv kubectl $HOME/bin
