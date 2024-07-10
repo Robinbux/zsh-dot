@@ -78,4 +78,5 @@ command -v zoxide &>/dev/null && eval "$(zoxide init zsh)"
 bindkey -e
 
 # Atuin
+source $HOME/.atuin/bin/env
 eval "$(atuin init zsh --disable-up-arrow)"

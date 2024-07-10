@@ -105,7 +105,7 @@ EOF
 
 install_oh_my_posh() {
     echo "Installing Oh My Posh..."
-    curl -s https://ohmyposh.dev/install.sh | bash -s
+    curl -s https://ohmyposh.dev/install.sh | sudo bash -s
 }
 
 main() {
