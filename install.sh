@@ -14,7 +14,6 @@ CARGO_PACKAGES=(
     "eza"
     "bat"
     "fnm"
-    "atuin"
 )
 
 install_dependencies() {
@@ -45,6 +44,10 @@ install_cargo_packages() {
         cargo install "$package"
     done
 
+}
+
+install_atuin() {
+    curl --proto '=https' --tlsv1.2 -LsSf https://setup.atuin.sh | sh
 }
 
 install_tpm() {
@@ -111,6 +114,7 @@ main() {
     install_tpm
     install_rust
     install_cargo_packages
+    install_atuin
     install_oh_my_zsh
     install_oh_my_zsh_plugins
     install_oh_my_posh
