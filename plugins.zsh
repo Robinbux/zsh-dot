@@ -1,3 +1,4 @@
+#!/usr/bin/zsh
 ##
 ## Plugins
 ##
@@ -26,7 +27,6 @@ compinit
 zinit light-mode for \
   hlissner/zsh-autopair \
   zdharma-continuum/fast-syntax-highlighting \
-  MichaelAquilina/zsh-you-should-use \
   zsh-users/zsh-autosuggestions \
   Aloxaf/fzf-tab
 
@@ -43,3 +43,7 @@ zinit light junegunn/fzf-bin
 # BAT
 zinit ice wait lucid from"gh-r" as"program" mv"*/bat -> bat" atload"export BAT_THEME='Nord'"
 zinit light sharkdp/bat
+
+# Atuin
+eval "$(atuin init zsh)"
+bindkey "^[[A" history-beginning-search-backward

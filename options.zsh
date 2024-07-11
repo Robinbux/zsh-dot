@@ -25,6 +25,12 @@ HISTFILE="$XDG_CACHE_HOME/zsh/.zhistory"
 HISTSIZE=10000
 SAVEHIST=10000
 
+# If histfile doesn't exist create:
+if [[ ! -f $HISTFILE ]]; then
+  mkdir -p $(dirname $HISTFILE)
+  touch $HISTFILE
+fi
+
 # Autosuggestion
 ZSH_AUTOSUGGEST_USE_ASYNC="true"
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern cursor regexp root line)
@@ -73,7 +79,3 @@ command -v zoxide &>/dev/null && eval "$(zoxide init zsh)"
 
 # Set editor default keymap to emacs (`-e`) or vi (`-v`)
 bindkey -e
-
-# Atuin
-source $HOME/.atuin/bin/env
-eval "$(atuin init zsh --disable-up-arrow)"
